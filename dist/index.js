@@ -54,9 +54,17 @@ app.get('/bikestations/trips', (req, res) => {
     ,b.Covered_distance
     ,b.Duration
     FROM bikestations as a
-    LEFT JOIN (SELECT * FROM biketrips ORDER BY datetime(Departure)) as b
-    ON a.ID=b.Departure_station_id
-    GROUP BY a.dbId;`;
+    LEFT JOIN (SELECT Min(datetime(Departure)) as Departure
+        ,Return
+        ,Departure_station_id
+        ,Departure_station_name
+        ,Return_station_id
+        ,Return_station_name
+        ,Covered_distance
+        ,Duration
+        FROM biketrips
+        GROUP BY Departure_station_id) as b
+    ON a.ID=b.Departure_station_id;`;
     try {
         db.serialize(() => {
             db.all(sql, (err, result) => {

@@ -17,7 +17,7 @@ const node_assert_1 = require("node:assert");
 const sqlite3_1 = __importDefault(require("sqlite3"));
 const functions_1 = require("../util/functions");
 //Database related functions testcases
-const db = new sqlite3_1.default.Database('biketrips');
+const db = new sqlite3_1.default.Database('sqliteDB');
 const getBadData = () => __awaiter(void 0, void 0, void 0, function* () {
     return new Promise((resolve, reject) => {
         db.serialize(() => {

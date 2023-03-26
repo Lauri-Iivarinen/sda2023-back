@@ -20,13 +20,45 @@ const testFetchDb = () => {
             console.log('Trips: ' + result.length);
             console.log(result[1]);
         });
-        db.all('SELECT * FROM biketrips WHERE Departure_station_id=501 ORDER BY datetime(Departure) DESC;', (err, result) => {
+        db.all('SELECT * FROM biketrips WHERE Departure_station_id=501 ORDER BY datetime(Departure) ASC;', (err, result) => {
             console.log(result[0]);
         });
-        //bikestations.dbId as bikedbId,bikestations.FID as FID,bikestations.ID as ID, bikestations.Nimi as Nimi, biketrips.dbId as tripdbId, biketrips.Departure_station_name as starting_point, biketrips.Return_station_name as return_point
-        db.all('SELECT a.dbId as stationDB, a.Nimi, a.ID, B.dbId as tripDB  FROM bikestations as a LEFT JOIN (SELECT * FROM biketrips ORDER BY datetime(Departure)) as b ON a.ID=b.Departure_station_id GROUP BY a.dbId;', (err, result) => {
+        const sql = `SELECT a.FID
+        ,a.ID
+        ,a.Nimi
+        ,a.Namn
+        ,a.Name
+        ,a.Osoite
+        ,a.Adress
+        ,a.Kaupunki
+        ,a.Stad
+        ,a.Operaattor
+        ,a.Kapasiteet
+        ,a.x
+        ,a.y
+        ,b.Departure
+        ,b.Return
+        ,b.Departure_station_id
+        ,b.Departure_station_name
+        ,b.Return_station_id
+        ,b.Return_station_name
+        ,b.Covered_distance
+        ,b.Duration
+        FROM bikestations as a
+        LEFT JOIN (SELECT Min(datetime(Departure)) as Departure
+            ,Return
+            ,Departure_station_id
+            ,Departure_station_name
+            ,Return_station_id
+            ,Return_station_name
+            ,Covered_distance
+            ,Duration
+            FROM biketrips
+            GROUP BY Departure_station_id) as b
+        ON a.ID=b.Departure_station_id;`;
+        db.all(sql, (err, result) => {
             console.log(result[0]);
-            console.log(result[1]);
+            //console.log(result[1])
         });
     });
 };
