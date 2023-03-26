@@ -5,7 +5,7 @@ import { getData, splitRow } from '../util/functions';
 
 //Database related functions testcases
 
-const db = new sqlite3.Database('biketrips')
+const db = new sqlite3.Database('sqliteDB')
 
 interface Count{
     count: number
