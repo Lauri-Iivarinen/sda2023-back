@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const globals_1 = require("@jest/globals");
 const node_assert_1 = require("node:assert");
 const sqlite3_1 = __importDefault(require("sqlite3"));
+const functions_1 = require("../util/functions");
+//Database related functions testcases
 const db = new sqlite3_1.default.Database('biketrips');
 const getBadData = () => __awaiter(void 0, void 0, void 0, function* () {
     return new Promise((resolve, reject) => {
@@ -27,8 +29,19 @@ const getBadData = () => __awaiter(void 0, void 0, void 0, function* () {
         });
     });
 });
-(0, globals_1.test)('db is clean', () => __awaiter(void 0, void 0, void 0, function* () {
+(0, globals_1.test)('db is clean from bad data', () => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield getBadData();
-    console.log(data);
     node_assert_1.strict.deepEqual(data.count, 0);
 }));
+(0, globals_1.test)('Rows are split correctly', () => {
+    const testString = 'a,b,c';
+    node_assert_1.strict.deepEqual((0, functions_1.splitRow)(testString), ['a', 'b', 'c']);
+});
+(0, globals_1.test)('splitRow detects bad data', () => {
+    const testString = 'a,b,"c,d,e",f';
+    node_assert_1.strict.deepEqual((0, functions_1.splitRow)(testString), ['a', 'b', 'cde', 'f']);
+});
+(0, globals_1.test)('filereader reads csv correctly', () => {
+    const rows = (0, functions_1.getData)('back/tests/testcsv/', 'test.csv');
+    node_assert_1.strict.deepEqual(rows, ['1,mike', '2,sike']);
+});

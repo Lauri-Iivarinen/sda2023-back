@@ -1,5 +1,5 @@
 import sqlite3 from "sqlite3";
-const db = new sqlite3.Database('biketrips')
+const db = new sqlite3.Database('sqliteDB')
 /** Delete rows from db based on recommendations in exercise */
 export const doCleanup = () => {
     db.serialize(() => {

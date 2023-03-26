@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.doCleanup = void 0;
 const sqlite3_1 = __importDefault(require("sqlite3"));
-const db = new sqlite3_1.default.Database('biketrips');
+const db = new sqlite3_1.default.Database('sqliteDB');
 /** Delete rows from db based on recommendations in exercise */
 const doCleanup = () => {
     db.serialize(() => {

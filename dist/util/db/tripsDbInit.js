@@ -6,14 +6,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createTrips = void 0;
 const sqlite3_1 = __importDefault(require("sqlite3"));
 const functions_1 = require("../functions");
-const db = new sqlite3_1.default.Database('biketrips');
+const db = new sqlite3_1.default.Database('sqliteDB');
 /** Create trips table and insert data from all csv files */
 const createTrips = () => {
     db.serialize(() => {
         const sqlCreate = `CREATE TABLE IF NOT EXISTS biketrips(
             dbId INTEGER PRIMARY KEY AUTOINCREMENT
-            ,Departure TEXT
-            ,Return TEXT
+            ,Departure Date
+            ,Return Date
             ,Departure_station_id INTEGER
             ,Departure_station_name TEXT
             ,Return_station_id INTEGER
@@ -21,7 +21,7 @@ const createTrips = () => {
             ,Covered_distance INTEGER
             ,Duration INTEGER);`;
         db.run(sqlCreate);
-        const tripData = (0, functions_1.getData)('2021-05.csv');
+        const tripData = (0, functions_1.getData)('dist/util/csv/', '2021-05.csv');
         const rows = tripData.map(row => (0, functions_1.splitRow)(row));
         rows.pop(); //Last row is empty
         //.csv is so large, for the scope of the exercise it is pointless to use the entire set, to speed up the process only take first 100 000 rows

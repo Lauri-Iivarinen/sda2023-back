@@ -7,8 +7,8 @@ exports.splitRow = exports.getData = void 0;
 const fs_1 = require("fs");
 const path_1 = __importDefault(require("path"));
 /** Return all rows as string from csv file */
-const getData = (name) => {
-    let file = path_1.default.join(__dirname, '..', '..', 'dist/util/csv/' + name);
+const getData = (pathName, name) => {
+    let file = path_1.default.join(__dirname, '..', '..', pathName + name);
     const lines = (0, fs_1.readFileSync)(file, 'utf-8').split('\n');
     const removed = lines.splice(0, 1);
     return lines;

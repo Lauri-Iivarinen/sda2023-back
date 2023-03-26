@@ -1,7 +1,7 @@
 import sqlite3 from "sqlite3";
 import { getData, splitRow } from "../functions";
 
-const db = new sqlite3.Database('bikestations')
+const db = new sqlite3.Database('sqliteDB')
 
 /** Create bikestations table and insert data from csv */
 export const createBikestations = () => {

@@ -1,15 +1,15 @@
 import sqlite3 from "sqlite3";
 import { getData, splitRow } from "../functions";
 
-const db = new sqlite3.Database('biketrips')
+const db = new sqlite3.Database('sqliteDB')
 
 /** Create trips table and insert data from all csv files */
 export const createTrips = () => {
     db.serialize(() => {
         const sqlCreate = `CREATE TABLE IF NOT EXISTS biketrips(
             dbId INTEGER PRIMARY KEY AUTOINCREMENT
-            ,Departure TEXT
-            ,Return TEXT
+            ,Departure Date
+            ,Return Date
             ,Departure_station_id INTEGER
             ,Departure_station_name TEXT
             ,Return_station_id INTEGER
