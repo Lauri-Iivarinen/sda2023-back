@@ -26,6 +26,7 @@ app.get('/bikestations', (req, res) => {
     try {
         db.serialize(() => {
             db.all('SELECT * FROM bikestations;', (err, result) => {
+                console.log('results',result.length)
                 return res.json(result)
             })
         })
@@ -73,6 +74,7 @@ app.get('/bikestations/trips', (req, res) => {
     try {
         db.serialize(() => {
             db.all(sql, (err, result) => {
+                console.log('results',result.length)
                 return res.json(result)
             })
         })
